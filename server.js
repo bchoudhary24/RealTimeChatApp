@@ -11,7 +11,7 @@ const io = socketio(server);
 
 // ✅ Step 2: CORS fix – allow only your frontend site
 app.use(cors({
-    origin: "https://splendid-frangollo-6851e6.netlify.app/", // 🔁 Replace with your real Netlify URL
+    origin: "https://splendid-frangollo-6851e6.netlify.app/", // replace with your Netlify domain
     methods: ["GET", "POST"]
 }));
 
@@ -48,4 +48,12 @@ app.post('/api/verify-otp', (req, res) => {
         delete otpStore[email];
         res.json({ success: true });
     } else {
-        res.json({ success:
+        res.json({ success: false, message: "Invalid OTP" });
+    }
+});
+
+// ✅ Start the server
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+    console.log(`🚀Server running on http://localhost:${PORT}`);
+});
