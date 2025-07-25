@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGO_URI)
 const otpStore = {};
 
 // ✅ Send OTP route (demo, fixed OTP)
-app.post('/api/send-otp', (req, res) => {
+app.post('https://realtimechatapp-b70g.onrender.com/api/send-otp', (req, res) => {
     const { email } = req.body;
     const otp = 123456; // Fixed demo OTP
     otpStore[email] = otp;
@@ -38,7 +38,7 @@ app.post('/api/send-otp', (req, res) => {
 });
 
 // ✅ Verify OTP route
-app.post('/api/verify-otp', (req, res) => {
+app.post('https://realtimechatapp-b70g.onrender.com/api/verify-otp', (req, res) => {
     const { email, code } = req.body;
     if (otpStore[email] && otpStore[email].toString() === code) {
         delete otpStore[email]; // clear used otp
