@@ -20,4 +20,4 @@ A real-time chat application built with *Node.js, **Socket.io, and **Vanilla Jav
 ## 🚀 How to run locally
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/RealTimeChatApp.git
+   git clone https://github.com/bchoudhary24/RealTimeChatApp.git
