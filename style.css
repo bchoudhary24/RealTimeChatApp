@@ -567,3 +567,95 @@ body.dark {
 #audioBtn:active {
     transform: scale(0.95);
 }
+/* ===== Responsive Design ===== */
+
+/* Tablets (width up to 1024px) */
+@media screen and (max-width: 1024px) {
+  nav, .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .login-container {
+    max-width: 90%;
+    padding: 16px;
+  }
+
+  .input-area {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .input-area input[type="text"],
+  #messageInput {
+    width: 100%;
+  }
+
+  .input-area button {
+    width: 100%;
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobiles (width up to 768px) */
+@media screen and (max-width: 768px) {
+  nav, .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px;
+  }
+
+  .navbar .logo {
+    font-size: 1.2em;
+  }
+
+  .navbar .room-name {
+    font-size: 1em;
+  }
+
+  .navbar .right {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .login-container {
+    max-width: 95%;
+    padding: 14px;
+  }
+
+  .login-container h1 {
+    font-size: 1.5em;
+  }
+
+  .login-container button {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  .chat-container {
+    padding: 6px;
+  }
+
+  .message {
+    max-width: 90%;
+    font-size: 0.95em;
+  }
+
+  .input-area {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .input-area button {
+    width: 100%;
+  }
+
+  #emojiPicker {
+    bottom: 100px;
+    left: 10px;
+    width: 90%;
+  }
+}
