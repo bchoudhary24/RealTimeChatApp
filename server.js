@@ -9,13 +9,13 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-// ✅ Step 2: CORS fix – allow only your frontend site
+// ✅ CORS Setup
 app.use(cors({
-    origin: "https://splendid-frangollo-6851e6.netlify.app/", // replace with your Netlify domain
+    origin: "https://splendid-frangollo-6851e6.netlify.app",
     methods: ["GET", "POST"]
 }));
 
-// Middlewares
+// ✅ Middleware
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 
@@ -28,22 +28,23 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ MongoDB connected'))
     .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// ✅ OTP store
+// ✅ In-memory OTP store
 const otpStore = {};
 
 // ✅ Send OTP route
 app.post('/api/send-otp', (req, res) => {
     const { email } = req.body;
-    const otp = 123456;
+    const otp = 123456; // For demo; replace with random later
     otpStore[email] = otp;
 
-    console.log('✅ OTP generated (demo):', otp);
-    res.json({ success: true, otp: otp });
+    console.log(`✅ OTP for ${email}:`, otp);
+    res.json({ success: true, otp });
 });
 
 // ✅ Verify OTP route
 app.post('/api/verify-otp', (req, res) => {
     const { email, code } = req.body;
+
     if (otpStore[email] && otpStore[email].toString() === code) {
         delete otpStore[email];
         res.json({ success: true });
@@ -52,8 +53,8 @@ app.post('/api/verify-otp', (req, res) => {
     }
 });
 
-// ✅ Start the server
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-    console.log(`🚀Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
