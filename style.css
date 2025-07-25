@@ -1,0 +1,569 @@
+/* Reset & basics */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: #222;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    transition: background 0.6s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+body.dark {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #eee;
+}
+
+
+/* Navbar */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+body.dark nav {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+
+/* Login container */
+
+.login-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: fadeSlide 0.6s ease;
+}
+
+body.dark .login-container {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(4px);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.login-container input:focus {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.03);
+}
+
+
+/* Buttons in login */
+
+.login-container button {
+    width: 48%;
+    margin: 6px 2px;
+    padding: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.2s ease, background 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-container button:hover {
+    transform: scale(1.1);
+}
+
+.login-container button:active {
+    transform: scale(0.95);
+}
+
+
+/* Toggle dark mode */
+
+.toggle {
+    cursor: pointer;
+    font-size: 24px;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+.toggle:hover {
+    transform: rotate(20deg);
+}
+
+
+/* Chat container */
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+
+/* Messages */
+
+.message {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
+    padding: 10px 14px;
+    margin: 6px 0;
+    border-radius: 14px;
+    max-width: 70%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeSlide 0.4s ease;
+}
+
+body.dark .message {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+/* Input area sticky bottom */
+
+.input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255);
+}
+
+
+/* Already hai... baki keep as is, neeche add karo */
+
+.input-area button {
+    font-size: 1.4rem;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.input-area button:hover {
+    transform: scale(1.2) rotate(-5deg);
+    background: #0056b3;
+}
+
+.input-area button:active {
+    transform: scale(0.95);
+}
+
+#messageInput {
+    flex: 1;
+    padding: 14px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.emoji-picker {
+    display: none;
+    position: absolute;
+    bottom: 80px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 10px;
+    max-width: 200px;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.emoji-picker span {
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: transform 0.2s ease;
+}
+
+.emoji-picker span:hover {
+    transform: scale(1.3);
+}
+
+#typing {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #000000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+#typing:not(:empty) {
+    opacity: 1;
+}
+
+
+/* Seen / unseen badge */
+
+
+/* Seen badge style */
+
+.seen-badge {
+    font-size: 0.75em;
+    color: white;
+    background: linear-gradient(90deg, #4caf50, #2e7d32);
+    border-radius: 8px;
+    padding: 2px 6px;
+    margin-left: 8px;
+    animation: fadeIn 0.6s ease-in-out;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Animation for smooth appearance */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Navbar styles */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 12px 12px;
+    transition: all 0.4s ease;
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    animation: bounceLogo 1.5s infinite alternate;
+}
+
+.navbar .room-name {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.navbar .right button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    margin-left: 8px;
+    padding: 8px 10px;
+    border-radius: 50%;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.navbar .right button:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.2) rotate(10deg);
+}
+
+
+/* Bounce animation for logo */
+
+@keyframes bounceLogo {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-4px);
+    }
+}
+
+
+/* Smooth dark mode support (optional) */
+
+body.dark .navbar {
+    background: linear-gradient(135deg, #333, #555);
+}
+
+body.dark .navbar .right button {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark .navbar .right button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+/* Typing animation (bouncing dots) */
+
+.typing::after {
+    content: ' ';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: gray;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+
+/* Dark mode transition */
+
+body {
+    transition: background 0.5s, color 0.5s;
+}
+
+body.dark {
+    background: #121212;
+    color: #eee;
+}
+
+.emoji-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-height: 100px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.emoji-picker span {
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+
+/* Message reactions */
+
+.reactions {
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+
+/* Bounce animation */
+
+@keyframes bounce {
+    0% {
+        transform: scale(0.7);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.message.bubble {
+    background: #f0f0f0;
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 18px;
+    margin: 4px;
+    animation: bounceIn 0.3s ease;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#typing {
+    font-style: italic;
+    font-size: 0.9em;
+    color: gray;
+}
+
+
+/* ==== Basic Chat Buttons ==== */
+
+.input-area button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin: 0 4px;
+    padding: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+    font-size: 18px;
+}
+
+.input-area button:hover {
+    background-color: #357ab8;
+    transform: scale(1.1);
+}
+
+.input-area button:active {
+    transform: scale(0.95);
+}
+
+
+/* ==== Send button special style ==== */
+
+
+/* ==== Emoji Picker ==== */
+
+#emojiPicker {
+    display: none;
+    flex-wrap: wrap;
+    background: #fff;
+    border: 1px solid #ccc;
+    position: absolute;
+    bottom: 60px;
+    left: 10px;
+    padding: 8px;
+    max-width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+#emojiPicker span {
+    font-size: 20px;
+    margin: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#emojiPicker span:hover {
+    transform: scale(1.3);
+}
+
+
+/* ==== Input area ==== */
+
+.input-area {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: #eee;
+    position: relative;
+    border-top: 1px solid #ccc;
+}
+
+.input-area input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    margin: 0 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+
+/* ==== Messages ==== */
+
+.message {
+    padding: 6px 10px;
+    margin: 4px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    max-width: 70%;
+    word-wrap: break-word;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Audio button style */
+
+#audioBtn {
+    background-color: #3d6a8d;
+    /* tomato color, alag look */
+    color: rgb(0, 59, 82);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#audioBtn:hover {
+    background-color: #3d99e5;
+    /* dark tomato on hover */
+    transform: scale(1.1);
+}
+
+#audioBtn:active {
+    transform: scale(0.95);
+}
