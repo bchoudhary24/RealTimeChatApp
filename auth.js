@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 // Register
-router.post('/register', async(req, res) => {
+router.post('https://realtimechatapp-b70g.onrender.com/register', async(req, res) => {
     const { username, password } = req.body;
     try {
         const userExists = await User.findOne({ username });
@@ -19,7 +19,7 @@ router.post('/register', async(req, res) => {
 });
 
 // Login
-router.post('/login', async(req, res) => {
+router.post('https://realtimechatapp-b70g.onrender.com/login', async(req, res) => {
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username });
