@@ -51,25 +51,6 @@
             const name = document.getElementById('name').value.trim();
             const otp = document.getElementById('otp').value.trim();
 
-            // ✅ Send OTP
-            fetch(`${BASE_URL}/api/send-otp`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                            email: userEmail
-                        }) // replace userEmail with your input
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log("✅ OTP sent:", data.otp); // show OTP in console
-                    } else {
-                        console.error("❌ OTP sending failed");
-                    }
-                });
-
             fetch(`${BASE_URL}/api/verify-otp`, {
                     method: 'POST',
                     headers: {
@@ -95,6 +76,7 @@
                     alert('❌ Error verifying OTP');
                 });
         }
+
 
 
         function toggleDarkMode() {
