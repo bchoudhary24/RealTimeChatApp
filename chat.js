@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io('https://realtimechatapp-b70g.onrender.com');
 const username = localStorage.getItem('username') || 'Guest';
 let currentRoom = 'general';
 
