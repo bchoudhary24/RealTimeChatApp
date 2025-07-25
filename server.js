@@ -37,6 +37,11 @@ const io = socketio(server, {
     }
 });
 
+app.get('/', (req, res) => {
+    res.send('🚀 Real-time Chat App backend is running successfully!');
+});
+
+
 // ✅ Temporary in-memory OTP store
 const otpStore = {};
 
