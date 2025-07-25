@@ -9,95 +9,43 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+// ✅ Step 2: CORS fix – allow only your frontend site
+app.use(cors({
+    origin: "https://splendid-frangollo-6851e6.netlify.app/", // 🔁 Replace with your real Netlify URL
+    methods: ["GET", "POST"]
+}));
+
 // Middlewares
 app.use(express.json());
-app.use(cors());
 app.use(express.static(__dirname + '/public'));
+
 app.get("/", (req, res) => {
     res.send("Real-time Chat App backend is running 🚀");
 });
 
-// Connect MongoDB
+// ✅ MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ MongoDB connected'))
     .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// Temporary in-memory OTP store
+// ✅ OTP store
 const otpStore = {};
 
-// ✅ Send OTP route (demo, fixed OTP)
-app.post('https://realtimechatapp-b70g.onrender.com/api/send-otp', (req, res) => {
+// ✅ Send OTP route
+app.post('/api/send-otp', (req, res) => {
     const { email } = req.body;
-    const otp = 123456; // Fixed demo OTP
+    const otp = 123456;
     otpStore[email] = otp;
 
     console.log('✅ OTP generated (demo):', otp);
-
-    // Send OTP in response so user can see (demo purpose)
     res.json({ success: true, otp: otp });
 });
 
 // ✅ Verify OTP route
-app.post('https://realtimechatapp-b70g.onrender.com/api/verify-otp', (req, res) => {
+app.post('/api/verify-otp', (req, res) => {
     const { email, code } = req.body;
     if (otpStore[email] && otpStore[email].toString() === code) {
-        delete otpStore[email]; // clear used otp
+        delete otpStore[email];
         res.json({ success: true });
     } else {
-        res.json({ success: false });
-    }
-});
-
-// ✅ Socket.io for chat
-io.on('connection', (socket) => {
-    console.log('🔌 New user connected');
-
-    socket.on('join', ({ username, room }) => {
-        socket.join(room);
-        console.log(`👤${ username }joined room: ${ room }`);
-    });
-
-    socket.on('chat message', ({ room, username, message, id }) => {
-        io.to(room).emit('chat message', { username, message, id });
-    });
-
-    socket.on('typing', ({ room, username }) => {
-        socket.to(room).emit('typing', { username });
-    });
-
-    socket.on('stop typing', ({ room }) => {
-        socket.to(room).emit('stop typing');
-    });
-    //listen when someone reads a message
-    socket.on('seen', ({ room, msgId, sender, seenBy, }) => {
-        // sirf sender ko message send karo
-        socket.to(room).emit('seen', { msgId, sender, seenBy });
-    });
-    // File / image message
-    socket.on('file message', data => {
-        io.to(data.room).emit('file message', data);
-    });
-
-    // Audio / voice recording message
-    socket.on('audio message', data => {
-        io.to(data.room).emit('audio message', data);
-    });
-
-    // (Future) video call signals
-    socket.on('video-offer', data => {
-        socket.to(data.room).emit('video-offer', data);
-    });
-
-    socket.on('video-answer', data => {
-        socket.to(data.room).emit('video-answer', data);
-    });
-
-    socket.on('ice-candidate', data => {
-        socket.to(data.room).emit('ice-candidate', data);
-    });
-});
-
-// ✅ Start server
-server.listen(process.env.PORT || 5000, () =>
-    console.log(`🚀Server running on http://localhost:${process.env.PORT || 5000}`)
-);
+        res.json({ success:
