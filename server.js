@@ -13,6 +13,9 @@ const io = socketio(server);
 app.use(express.json());
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
+app.get("/", (req, res) => {
+    res.send("Real-time Chat App backend is running 🚀");
+});
 
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI)
